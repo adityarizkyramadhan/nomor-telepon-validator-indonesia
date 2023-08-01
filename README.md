@@ -3,6 +3,9 @@
 Library ini merupakan open source yang ditulis dalam bahasa pemrograman Golang yang bertujuan untuk membantu pengembang dalam melakukan validasi nomor telepon di Indonesia. 
 Library ini dirancang untuk membantu melakukan validasi apakah sebuah nomor telepon sesuai dengan format yang berlaku di Indonesia.
 
+## Versi
+Kode versi 1.0
+
 ## Fitur Utama
 
 - Validasi Nomor Telepon
