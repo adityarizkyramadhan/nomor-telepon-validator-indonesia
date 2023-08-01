@@ -7,10 +7,10 @@ import (
 )
 
 var (
-	errMengandungHuruf    = errors.New("nomor ponsel mengandung huruf")
-	errPanjangTidakSesuai = errors.New("panjang nomor ponsel tidak sesuai standar")
-	errPrefix             = errors.New("nomor telepon tidak sesuai standar prefix")
-	errLayanan            = errors.New("layanan tidak tersedia")
+	ErrMengandungHuruf    = errors.New("nomor ponsel mengandung huruf")
+	ErrPanjangTidakSesuai = errors.New("panjang nomor ponsel tidak sesuai standar")
+	ErrPrefix             = errors.New("nomor telepon tidak sesuai standar prefix")
+	ErrLayanan            = errors.New("layanan tidak tersedia")
 )
 
 var penyediaLayanan = map[string]string{
@@ -83,30 +83,29 @@ func CekNomor(nomor string) NomorTeleponValidator {
 func (nt *NomorTelepon) Validasi() error {
 	rgx := regexp.MustCompile(`^[0-9]*$`)
 	if !rgx.MatchString(nt.Nomor) {
-		return errMengandungHuruf
+		return ErrMengandungHuruf
 	}
 
 	if len(nt.Nomor) > maksPanjang || len(nt.Nomor) < minPanjang {
-		return errPanjangTidakSesuai
+		return ErrPanjangTidakSesuai
 
 	}
 
 	if !(nt.Nomor[0] == '0' || nt.Nomor[:2] == "62") {
-		return errPrefix
+		return ErrPrefix
 	}
 
 	if nt.Nomor[0] == '0' {
 		nt.nomorTanpaPrefix = nt.Nomor[1:]
 	} else if nt.Nomor[:2] == "62" {
-		nt.nomorTanpaPrefix = nt.Nomor[3:]
+		nt.nomorTanpaPrefix = nt.Nomor[2:]
 	} else {
-		return errPrefix
+		return ErrPrefix
 	}
-
 	layanan := penyediaLayanan[nt.nomorTanpaPrefix[:3]]
 
 	if layanan == "" {
-		return errLayanan
+		return ErrLayanan
 	}
 
 	nt.validasi = true
